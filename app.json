@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "資產脈動",
+    "slug": "assetpulse",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "assetBundlePatterns": ["**/*"]
+  }
+}
