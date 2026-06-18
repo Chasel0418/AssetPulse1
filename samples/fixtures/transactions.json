@@ -1,0 +1,7 @@
+[
+  {"date": "2026-06-03", "amount": 1280, "merchant": "星巴克 統一星巴克", "card_last4": "1234", "source_id": "msg_a1"},
+  {"date": "2026-06-07", "amount": 599, "merchant": "Netflix", "card_last4": "1234", "source_id": "msg_a2"},
+  {"date": "2026-06-11", "amount": 3450, "merchant": "全聯福利中心", "card_last4": "5678", "source_id": "msg_a3"},
+  {"date": "2026-06-15", "amount": 88, "merchant": "7-ELEVEN", "card_last4": "1234", "source_id": "msg_a4"},
+  {"date": "2026-06-18", "amount": 12000, "merchant": "蝦皮購物", "card_last4": "5678", "source_id": "msg_a5"}
+]

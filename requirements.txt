@@ -1,0 +1,14 @@
+# Gmail 讀取
+google-api-python-client>=2.120
+google-auth-oauthlib>=1.2
+google-auth-httplib2>=0.2
+
+# 解析 PDF 附件（部分銀行帳單／發票是 PDF）
+pdfplumber>=0.11
+
+# 輸出到 Notion
+notion-client>=2.2
+
+# 設定檔與環境變數
+PyYAML>=6.0
+python-dotenv>=1.0

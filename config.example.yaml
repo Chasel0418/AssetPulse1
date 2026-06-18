@@ -1,0 +1,32 @@
+# 複製成 config.yaml 後修改。機密資訊（token）請放 .env，不要寫在這裡。
+
+# Gmail 抓取規則。query 用的是 Gmail 搜尋語法。
+# type: statement = 信用卡刷卡通知／帳單；invoice = 發票
+# parser: 對應的解析器名稱，內建只有 generic，可自行擴充
+sources:
+  - name: 國泰世華刷卡通知
+    query: "from:ecard@cathaybk.com.tw newer_than:35d"
+    type: statement
+    parser: generic
+
+  - name: 玉山銀行刷卡通知
+    query: "from:webmaster@email.esunbank.com.tw 消費 newer_than:35d"
+    type: statement
+    parser: generic
+
+  - name: 電子發票通知
+    query: "subject:(電子發票 OR 發票) newer_than:35d"
+    type: invoice
+    parser: generic
+
+# 核銷參數
+reconcile:
+  date_window_days: 5          # 交易日與發票日可差幾天
+  amount_tolerance: "0"        # 金額容許誤差（元）
+  merchant_match_threshold: 0.6 # 商家名稱相似度門檻（0~1）
+
+# Notion Database ID（也可改放 .env 的 NOTION_DATABASE_ID）
+notion_database_id: ""
+
+gmail_credentials_path: credentials.json
+gmail_token_path: token.json

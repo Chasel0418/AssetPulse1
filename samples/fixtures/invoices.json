@@ -1,0 +1,6 @@
+[
+  {"date": "2026-06-03", "amount": 1280, "seller": "統一星巴克股份有限公司", "invoice_number": "AB12345678", "source_id": "inv_1"},
+  {"date": "2026-06-08", "amount": 599, "seller": "Netflix", "invoice_number": "AB12345679", "source_id": "inv_2"},
+  {"date": "2026-06-11", "amount": 3450, "seller": "全聯實業股份有限公司", "invoice_number": "AB12345680", "source_id": "inv_3"},
+  {"date": "2026-06-16", "amount": 88, "seller": "統一超商股份有限公司", "invoice_number": "AB12345681", "source_id": "inv_4"}
+]
