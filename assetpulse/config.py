@@ -39,6 +39,7 @@ class AppConfig:
     notion_token: str = ""
     gmail_credentials_path: str = "credentials.json"
     gmail_token_path: str = "token.json"
+    state_path: str = "data/processed.json"
 
     @classmethod
     def load(cls, path: str | Path = "config.yaml") -> "AppConfig":
@@ -63,4 +64,5 @@ class AppConfig:
             notion_token=os.getenv("NOTION_TOKEN", ""),
             gmail_credentials_path=data.get("gmail_credentials_path", "credentials.json"),
             gmail_token_path=data.get("gmail_token_path", "token.json"),
+            state_path=data.get("state_path", "data/processed.json"),
         )

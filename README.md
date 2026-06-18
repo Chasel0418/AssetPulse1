@@ -82,7 +82,17 @@ python -m assetpulse run
 
 # 抓信、核銷，並寫進 Notion
 python -m assetpulse run --notion
+
+# 忽略防重複紀錄，重新處理所有交易（例如想重建 Notion）
+python -m assetpulse run --notion --ignore-state
 ```
+
+### 防重複匯入
+
+成功寫進 Notion 的交易，其來源 Gmail id 會記在 `data/processed.json`
+（已被 `.gitignore` 排除）。下個月再跑時會自動跳過這些已匯入的交易，
+所以同一筆刷卡不會被重複匯入。注意：**只有加 `--notion` 真正寫入後才會記錄**，
+純預覽（不加 `--notion`）不會影響這份紀錄。需要全部重來時加 `--ignore-state`。
 
 `--sample` 的輸出範例：
 

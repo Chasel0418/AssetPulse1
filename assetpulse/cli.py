@@ -78,6 +78,8 @@ def cmd_auth(config: AppConfig) -> int:
 
 
 def cmd_run(config: AppConfig, args: argparse.Namespace) -> int:
+    from .state import ProcessedStore
+
     if args.sample:
         transactions, invoices = _load_sample()
     else:
@@ -87,6 +89,19 @@ def cmd_run(config: AppConfig, args: argparse.Namespace) -> int:
         transactions, invoices = collect(config, gmail)
 
     print(f"抓到 {len(transactions)} 筆交易、{len(invoices)} 張發票。")
+
+    store = ProcessedStore(config.state_path)
+    if not args.ignore_state:
+        before = len(transactions)
+        transactions = store.filter_new(transactions)
+        skipped = before - len(transactions)
+        if skipped:
+            print(f"跳過 {skipped} 筆先前已匯入的交易（防重複）。")
+
+    if not transactions:
+        print("沒有新的交易需要處理。")
+        return 0
+
     results = run_reconcile(config, transactions, invoices)
     _print_results(results)
 
@@ -98,7 +113,10 @@ def cmd_run(config: AppConfig, args: argparse.Namespace) -> int:
 
         writer = NotionWriter(config.notion_token, config.notion_database_id)
         count = writer.write_all(results)
-        print(f"\n✅ 已寫入 Notion {count} 筆。")
+        for r in results:
+            store.mark(r.transaction)
+        store.save()
+        print(f"\n✅ 已寫入 Notion {count} 筆，並記錄為已處理。")
     return 0
 
 
@@ -112,6 +130,9 @@ def main(argv: list[str] | None = None) -> int:
     run_p = sub.add_parser("run", help="抓信、核銷、輸出")
     run_p.add_argument("--sample", action="store_true", help="用假資料跑（免憑證）")
     run_p.add_argument("--notion", action="store_true", help="把結果寫進 Notion")
+    run_p.add_argument(
+        "--ignore-state", action="store_true", help="忽略防重複紀錄，重新處理所有交易"
+    )
 
     args = parser.parse_args(argv)
     config = AppConfig.load(args.config)
