@@ -7,7 +7,8 @@
 
 - 這是 **remote ephemeral container**（Claude Code on the web）。容器閒置就回收，
   **沒有 commit + push 的東西一律消失**。沒有跨 session 的隱藏記憶。
-- Repo：`chasel0418/assetpulse1`。工作分支由每個 session 的 system prompt 指定
+- Repo：`Chasel0418/AssetPulse1`（GitHub 上的實際大小寫，傳給 MCP 工具照這個寫）。
+  工作分支由每個 session 的 system prompt 指定
   （`claude/...` 開頭），不要直接推 `main`。
 - **沒有 `gh` CLI**。所有 GitHub 操作走 `mcp__github__*` 工具（用 ToolSearch 載入）。
   弱模型最常犯的錯之一就是打 `gh pr create` 然後對錯誤訊息瞎猜——直接禁用。

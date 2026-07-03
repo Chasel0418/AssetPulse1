@@ -36,7 +36,7 @@
 2. 大量資訊蒐集 → 派 subagent；小型精準操作 → 自己做。
 3. 每完成一步：更新清單、能 push 就 push。
 4. 驗收：檔案 read-back；程式碼跑測試或實跑；高風險判斷派 fresh-context
-   subagent 覆核（規則見 `20-judgment.md` §驗證）。
+   subagent 覆核（不自驗規則見 `10-dispatch.md` §6，品質底線見 `20-judgment.md` §5）。
 5. 同一修法失敗 2 次 → 停，讀 `10-dispatch.md` 的升級路徑。
 
 ## 本 repo 現況

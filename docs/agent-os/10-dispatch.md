@@ -10,7 +10,7 @@
 
 必須派 subagent 的工作（不是建議，是規則）：
 - 掃 repo / 找「某東西在哪」而目標檔未知 → `Explore`
-- 讀 3 個以上檔案、或任何單檔 >500 行且只需要其中一部分 → `Explore` 或 `general-purpose`
+- 讀 4 個以上檔案、或任何單檔 >500 行且只需要其中一部分 → `Explore` 或 `general-purpose`
 - 查網頁、讀外部文件、做研究 → `general-purpose`
 - 批次改檔（同型修改套用到多處） → `general-purpose`
 - 查 Claude Code / Claude API 的功能與語法 → `claude-code-guide`（不要憑記憶答）
@@ -42,9 +42,11 @@
   以 schema enum 為準）。不指定則用 agent 定義的預設或繼承主對話。
 - **effort 無法在 Agent tool 呼叫時指定**，只能寫在 `.claude/agents/<名>.md`
   frontmatter（`effort: low|medium|high|xhigh|max`）。需要特定 effort 的
-  常用角色，就建一個 agent 定義檔（本 repo 已有 `.claude/agents/verifier.md`）。
+  常用角色，就建一個**新的** agent 定義檔（本 repo 已有
+  `.claude/agents/verifier.md`）。新增新檔可自行做；修改或刪除既有 agent 檔
+  要先問使用者（見 `40-maintenance.md` §1）。
 - 主對話自己的 effort：`/effort <level>` 指令，或 `.claude/settings.json` 的
-  `"effortLevel"`（low–xhigh）。
+  `"effortLevel"`（low–xhigh）。（2026-07-03 依官方文件確認，未在本環境實測。）
 
 選型預設表：
 
@@ -95,15 +97,18 @@
 
 ## 7. MCP 工具速查（用 `select:` 精準載入）
 
+工具名必須用**完整前綴名**，短名載不到（實測 `select:pull_request_read` 會回
+「No matching deferred tools found」）：
+
 | 要做什麼 | ToolSearch query |
 |---|---|
-| 看 PR / 讀 PR diff、留言、CI 狀態 | `select:pull_request_read` |
-| 開 PR | `select:create_pull_request` |
-| 讀/開/改 issue | `select:issue_read,issue_write` |
-| 查 CI job log | `select:get_job_logs,get_check_run` |
-| 訂閱 PR 事件（babysit PR） | `select:subscribe_pr_activity` |
-| 排程/提醒自己 | ToolSearch `select:` Claude_Code_Remote 的 `send_later` |
-| 網頁抓取/搜尋 | `select:WebFetch,WebSearch`（但研究類請派 subagent 去做） |
+| 看 PR / 讀 PR diff、留言、CI 狀態 | `select:mcp__github__pull_request_read` |
+| 開 PR | `select:mcp__github__create_pull_request` |
+| 讀/開/改 issue | `select:mcp__github__issue_read,mcp__github__issue_write` |
+| 查 CI job log | `select:mcp__github__get_job_logs,mcp__github__get_check_run` |
+| 訂閱 PR 事件（babysit PR） | `select:mcp__github__subscribe_pr_activity` |
+| 排程/提醒自己 | `select:mcp__Claude_Code_Remote__send_later` |
+| 網頁抓取/搜尋 | `select:WebFetch,WebSearch`（內建工具用短名；研究類請派 subagent 去做） |
 
 Adobe / Higgsfield / Google Drive / Spotify 的工具只在使用者明確要求
 相應功能時才載入，平常完全不要碰。
