@@ -6,15 +6,20 @@ import re
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 
-# 金額：抓 1,234 或 1234.56，允許 NT$ / $ 前綴
-_AMOUNT_RE = re.compile(r"(?:NT\$|\$)?\s*([0-9][0-9,]*(?:\.[0-9]+)?)")
+# 金額：優先抓「消費/金額/NT$」等關鍵字後面的數字，避免把卡號末四碼、
+# 日期等其他數字誤認成金額；找不到關鍵字才退回抓第一個數字。
+_NUM = r"([0-9][0-9,]*(?:\.[0-9]+)?)"
+_AMOUNT_KEYWORD_RE = re.compile(
+    rf"(?:消費金額|消費|金額|總計|合計|NT\$|TWD)[:：]?\s*(?:NT\$|\$)?\s*{_NUM}"
+)
+_AMOUNT_FALLBACK_RE = re.compile(rf"(?:NT\$|\$)?\s*{_NUM}")
 
 # 日期：支援 2026/06/18、2026-06-18、2026.06.18、115/06/18（民國年）
 _DATE_RE = re.compile(r"(\d{2,4})[/\-.](\d{1,2})[/\-.](\d{1,2})")
 
 
 def parse_amount(text: str) -> Decimal | None:
-    m = _AMOUNT_RE.search(text)
+    m = _AMOUNT_KEYWORD_RE.search(text) or _AMOUNT_FALLBACK_RE.search(text)
     if not m:
         return None
     try:
