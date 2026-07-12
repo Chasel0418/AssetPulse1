@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSCameraUsageDescription</key>
+	<string>需要使用相機拍攝名片，進行文字辨識。</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>需要使用麥克風錄製 15 秒語音備註，記下與客戶交談的重點。</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>需要語音辨識權限，將您的語音備註自動轉為文字。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>可從相簿選取已拍好的名片照片進行辨識。</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>line</string>
+	</array>
+</dict>
+</plist>
